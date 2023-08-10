@@ -38,21 +38,25 @@ const array = [0, 123, 23, 23, 45, 4, 6, 1, 3, 9, 10];
 
 // option 3
 
-const more = function (el, num) {
+const moreThan = function (el, num) {
     return el > num;
 }
 
-const less = (el, num) => el < num;
+const lessThan = (el, num) => el < num;
 
-function clearArr(arr, num, fn) {
+function clearArr(arr, fn, num) {
+    let filtredArr = [];
+
     for (el of arr) {
         if (!fn(el, num)) {
-            arr.splice(arr.indexOf(el), 1);
+            console.log(el);
+            filtredArr.push(el);
         }
     }
-    return arr;
+    return filtredArr;
 }
 
-console.log(clearArr(array, 10, less))
+console.log(array);
+console.log(clearArr(array, lessThan, 10));
 
 ////////////////////////////////////////////////////////////////////////////
