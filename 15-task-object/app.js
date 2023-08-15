@@ -37,24 +37,16 @@ const toDoList = {
         }
     },
 
-    updateTitle: function (id, newTitle) {
+    updateTask: function (id, updatedTask) {
         const taskIndex = this.tasks.findIndex(task => task.id == id);
         if (taskIndex != -1) {
-            this.tasks[taskIndex].title = newTitle;
+            this.tasks[taskIndex].title = updatedTask.title ?? this.tasks[taskIndex].title;
+            this.tasks[taskIndex].priority = updatedTask.priority ?? this.tasks[taskIndex].priority;
             console.log(`Title of task with id=${id} has been updated`);
         } else {
             console.log(`Task with id=${id} not found`);
         }
-    },
-
-    updatePriority: function (id, newPriority) {
-        const taskIndex = this.tasks.findIndex(task => task.id == id);
-        if (taskIndex != -1) {
-            this.tasks[taskIndex].priority = newPriority;
-            console.log(`Title of task with id=${id} has been updated`);
-        } else {
-            console.log(`Task with id=${id} not found`);
-        }
+        
     },
 
     sortByPriority: function() {
@@ -68,7 +60,17 @@ toDoList.addTask(taks1);
 toDoList.addTask(taks2);
 toDoList.addTask(taks3);
 toDoList.deleteTask(1);
-toDoList.updateTitle(2, "Work Harder")
-toDoList.updatePriority(2, "1")
 toDoList.sortByPriority();
+
+const updateTask1 = {
+    title: "updated Task", 
+};
+
+const updateTask2 = {
+    title: "updated Task 2", 
+    priority: "10"
+};
+
+toDoList.updateTask(2, updateTask1);
+toDoList.updateTask(3, updateTask2);
 console.log(toDoList);
