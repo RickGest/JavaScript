@@ -19,5 +19,15 @@ function useMap(obj) {
     return Object.keys(obj).map(key => key + '=' + obj[key]).join('&');
 }
 
+// option 3
+function useEntities(obj) {
+    let result = '';
+    for (const [key, value] of Object.entries(obj)) {
+        result += key + '=' + value + '&'; 
+    }
+    return result.slice(0, -1);
+}
+
 console.log(useForIn(query));
 console.log(useMap(query));
+console.log(useEntities(query));
