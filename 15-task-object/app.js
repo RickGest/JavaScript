@@ -40,8 +40,7 @@ const toDoList = {
     updateTask: function (id, updatedTask) {
         const taskIndex = this.tasks.findIndex(task => task.id == id);
         if (taskIndex != -1) {
-            this.tasks[taskIndex].title = updatedTask.title ?? this.tasks[taskIndex].title;
-            this.tasks[taskIndex].priority = updatedTask.priority ?? this.tasks[taskIndex].priority;
+            this.tasks[taskIndex] = {...this.tasks[taskIndex], ...updatedTask}
             console.log(`Title of task with id=${id} has been updated`);
         } else {
             console.log(`Task with id=${id} not found`);
