@@ -64,3 +64,9 @@
 	outline: none;
 	box-shadow: none;
 }
+
+.calculator_buttons {
+	display: flex;
+	gap: 10px;
+	flex-direction: row;
+}

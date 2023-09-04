@@ -1,75 +1,46 @@
 'use strict';
 
-function showNotification() {
-	const delayInMilliseconds = 3000; //3 second
-	document.querySelector('.notification').classList.remove('notification_hidden');
-	setTimeout(function() {
-		document.querySelector('.notification').classList.add('notification_hidden');
-	}, delayInMilliseconds);
-}
-
-function submitForm() {
-	const input = document.querySelector('.input').value;
-	if (!input) {
-		return;
-	}
-	//display input
-	document.querySelector('.panel').innerText = input;
-	//reset input
-	document.querySelector('.input').value = '';
-	showNotification();
-
-	//save to local storage
-	localStorage.setItem('value1', input);
-}
+let values = [];
 
 function doPlus() {
-	doCalculation('+');
+	addOperation('+');
 }
 
 function doMinus() {
-	doCalculation('-');
+	addOperation('-');
 }
 
-function doTimes() {
-	doCalculation('*');
+function doMultiply() {
+	addOperation('*');
 }
 
 function doDevide() {
-	doCalculation('/');
+	addOperation('/');
 }
 
-function doCalculation(operation) {
-	const input = document.querySelector('.input').value;
-	let operSign = operation;
-	let result;
-	if (!input) {
-		return;
-	}
-	switch(operation) {
-		case '+':
-			result = Number(localStorage.getItem('value1')) + Number(input);
-			break;
-		case '-':
-			result = Number(localStorage.getItem('value1')) - Number(input);
-			break;
-		case '*':
-			result = Number(localStorage.getItem('value1')) * Number(input);
-			operSign = 'x';
-			break;
-		case '/':
-			result = Number(localStorage.getItem('value1')) / Number(input);
-			operSign = '÷';
-			break;
-	}
-	
-	document.querySelector('.panel').innerText = localStorage.getItem('value1')+operSign+input+' = '+result;
+function calculate() {
+	values.push(document.querySelector('.input').value);
+	document.querySelector('.panel').innerText = values.join(' ');
+	const res = eval(values.join(' '));
+	document.querySelector('.panel').innerText = document.querySelector('.panel').innerText = values.join(' ') + ' = ' + res;
+	console.log(values);
+}
+
+function clearArray() {
+	document.querySelector('.panel').innerText = 'Enter new operation';
 	document.querySelector('.input').value = '';
-	localStorage.removeItem('value1');
+	values = [];
+}
+
+function addOperation(operation) {
+	values.push(document.querySelector('.input').value);
+	values.push(operation);
+	document.querySelector('.panel').innerText = values.join(' ');
+	console.log(values);
 }
 
 function inputChanged(e) {
-	if (e.code == 'Enter') {
+	if (e.code === 'Enter') {
 		submitForm();
 		showNotification();
 	}
