@@ -28,7 +28,7 @@ const toDoList = {
     },
 
     deleteTask: function (id) {
-        const taskIndex = this.tasks.findIndex(task => task.id == id);
+        const taskIndex = this.tasks.findIndex(task => task.id === id);
         if (taskIndex != -1) {
             this.tasks.splice(taskIndex, 1);
             console.log(`Task with id=${id} has been deleted`);
