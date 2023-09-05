@@ -2,21 +2,23 @@
 
 let values = [];
 
-function doPlus() {
-	addOperation('+');
-}
-
-function doMinus() {
-	addOperation('-');
-}
-
-function doMultiply() {
-	addOperation('*');
-}
-
-function doDevide() {
-	addOperation('/');
-}
+document.querySelector('.calculator_buttons').addEventListener('click', function(event) {
+	switch (event.target.innerText) {
+		case '+':
+			addOperation('+');
+			break;
+		case '-':
+			addOperation('-');
+			break;
+		case 'x':
+			addOperation('*');
+			break;
+		case '÷':
+			addOperation('/');
+			break;
+	}
+	document.querySelector('.input').value = '';
+})
 
 function calculate() {
 	values.push(document.querySelector('.input').value);
