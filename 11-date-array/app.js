@@ -1,20 +1,52 @@
-const arr = ['10-02-2022', 'test', '11/12/2023', '31/31/1990', '99-00-99','01/14/44','16/06/2023', '10'];
+const rawDates = ['10-02-2022', 'test', '11/12/2023', '31/31/1990', '99-00-9999','01/14/2023','16/06/2023', '10'];
 
-function isValid(date) {
-    let isValid;
-    const regex = /^(\d{2}).(\d{2}).(\d{4})$/;
-    const match = date.match(regex);
-    if(!regex.test(date)) {
-        return isValid =false;
-    } else if (!checkDate(match[1]) || !checkMonth(match[2])) {
-        return isValid =false;
+
+
+function isValid(data) {
+    let dateIsValid = false;
+    let date = '';
+    let month = '';
+
+    if (data.charAt(2) === '-' && data.charAt(5) === '-') {
+        date = data.substring(0,2);
+        month = data.substring(3,5);
+    };
+    if (data.charAt(2) === '/' && data.charAt(5) === '/') {
+        date = data.substring(3,5);
+        month = data.substring(0,2);
+    };
+
+    switch (month) {
+        default: 
+            dateIsValid = false;
+            break;
+        case "01": case "03": case "05": case "07": case "08": case "10": case "12":
+            if (Number(date) > 0 && Number(date) <= 31) {
+                dateIsValid = true;
+            }
+            break;
+        case "04": case "06": case "09": case "11":
+            if (Number(date) > 0 && Number(date) <= 30) {
+                dateIsValid = true;
+            }
+            break;
+        case "02":
+            if (Number(date) > 0 && Number(date) <= 28) {
+                dateIsValid = true;
+            }
+            break;
     }
-    return true;
+    return dateIsValid;
 }
 
-const checkDate = date => (date < 0 || date > 31) ? false : true
-const checkMonth = date => (date < 1 || date > 12) ? false : true
+function checkArray(arr) {
+    let newArr = [];
+    
+    newArr = arr.filter(date => {
+        return isValid(date);
+    })
 
-const res = arr.filter(data => isValid(data));
+    return newArr;
+}
 
-console.log(res);
+console.log(checkArray(rawDates));
