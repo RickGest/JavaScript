@@ -40,10 +40,3 @@ function addOperation(operation) {
 	document.querySelector('.panel').innerText = values.join(' ');
 	console.log(values);
 }
-
-function inputChanged(e) {
-	if (e.code === 'Enter') {
-		submitForm();
-		showNotification();
-	}
-}
