@@ -1,42 +1,59 @@
 'use strict';
+const subElements = {
+	input: document.querySelector('.input'),
+	operatorsWrapper: document.querySelector('.operation'),
+	panel: document.querySelector('.panel')
+}
+const values = {
+	firstValue: 0,
+	secondValue: 0,
+	operator: null,
+	result: 0,
+}
 
-let values = [];
-
-document.querySelector('.calculator_buttons').addEventListener('click', function(event) {
-	switch (event.target.innerText) {
-		case '+':
-			addOperation('+');
-			break;
-		case '-':
-			addOperation('-');
-			break;
-		case 'x':
-			addOperation('*');
-			break;
-		case '÷':
-			addOperation('/');
-			break;
+subElements.operatorsWrapper.addEventListener('click', function(event) {
+	values.operator = event.target.innerText;
+	if (values.result !== 0) {
+		values.firstValue = values.result;
+		values.result = 0;
+	} else {
+		values.firstValue = Number(subElements.input.value);
 	}
-	document.querySelector('.input').value = '';
+	subElements.input.value = '';
+	subElements.panel.innerText = values.firstValue;
+	subElements.input.focus();
 })
 
 function calculate() {
-	values.push(document.querySelector('.input').value);
-	document.querySelector('.panel').innerText = values.join(' ');
-	const res = eval(values.join(' '));
-	document.querySelector('.panel').innerText = document.querySelector('.panel').innerText = values.join(' ') + ' = ' + res;
-	console.log(values);
+	if (values.firstValue ?? values.secondValue ?? values.operator) {
+		values.secondValue = Number(subElements.input.value);
+		switch (values.operator) {
+			case '+':
+				values.result = values.firstValue + values.secondValue;
+				break;
+			case '-':
+				values.result = values.firstValue - values.secondValue;
+				break;
+			case 'x':
+				values.result = values.firstValue * values.secondValue;
+				break;
+			case "/":
+				values.result = values.firstValue / values.secondValue;
+				break;
+		}
+		subElements.panel.innerText = values.result;
+		values.firstValue = Number(values.result);
+		subElements.input.value = '';
+	}
 }
 
 function clearArray() {
-	document.querySelector('.panel').innerText = 'Enter new operation';
-	document.querySelector('.input').value = '';
-	values = [];
+	subElements.input.value = '';
+	subElements.panel.innerText = '';
 }
 
-function addOperation(operation) {
-	values.push(document.querySelector('.input').value);
-	values.push(operation);
-	document.querySelector('.panel').innerText = values.join(' ');
-	console.log(values);
+function inputChanged(e) {
+	if (values.result !== 0) {
+		values.result = 0;
+	}
 }
