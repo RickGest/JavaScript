@@ -28,8 +28,8 @@ const toDoList = {
     },
 
     deleteTask: function (id) {
-        const taskIndex = this.tasks.findIndex(task => task.id == id);
-        if (taskIndex != -1) {
+        const taskIndex = this.tasks.findIndex(task => task.id === id);
+        if (taskIndex !== -1) {
             this.tasks.splice(taskIndex, 1);
             console.log(`Task with id=${id} has been deleted`);
         } else {
@@ -39,7 +39,7 @@ const toDoList = {
 
     updateTask: function (id, updatedTask) {
         const taskIndex = this.tasks.findIndex(task => task.id == id);
-        if (taskIndex != -1) {
+        if (taskIndex !== -1) {
             this.tasks[taskIndex] = {...this.tasks[taskIndex], ...updatedTask}
             console.log(`Title of task with id=${id} has been updated`);
         } else {
@@ -54,22 +54,20 @@ const toDoList = {
         console.log(this.tasks);
     }
 }
-
-toDoList.addTask(taks1);
-toDoList.addTask(taks2);
-toDoList.addTask(taks3);
-toDoList.deleteTask(1);
-toDoList.sortByPriority();
-
-const updateTask1 = {
-    title: "updated Task", 
-};
-
-const updateTask2 = {
-    title: "updated Task 2", 
-    priority: "10"
-};
-
-toDoList.updateTask(2, updateTask1);
-toDoList.updateTask(3, updateTask2);
 console.log(toDoList);
+
+const toDoList2 = {
+    tasks: [],
+}
+
+
+const addTaskFor2 = toDoList.addTask.bind(toDoList2);
+const deleteTaskFor2 = toDoList.deleteTask;
+const updateTaskFor2 = toDoList.updateTask
+
+addTaskFor2(taks1);
+addTaskFor2(taks2);
+deleteTaskFor2.call(toDoList2, 1)
+updateTaskFor2.apply(toDoList2, [2, taks3])
+
+console.log(toDoList2)
